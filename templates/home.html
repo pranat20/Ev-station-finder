@@ -1,0 +1,492 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>EV Station Finder</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</head>
+
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a class="logo d-flex align-items-center">
+       
+        <img src="{% static 'assets/img/logo-2.png' %}" alt="Logo" class="logo-img">
+
+        <a class="brand d-flex align-items-center">
+          
+          <img src="{% static 'assets/img/brands.png' %}" alt="Brands" class="brand-img">
+      
+        
+      </a>
+      </a>
+      
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{% url 'home' %}" class="active">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
+          <li><a href="{% url 'properties' %}">EV Stations</a></li>
+          <li><a href="{% url 'agents' %}">Agents</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+          
+          <!-- Dropdown for account or register -->
+            {% if user.is_authenticated %}
+            <li class="dropdown"><a href="#"><span>Account</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            {% endif %}
+        </li>
+        {% if not user.is_authenticated %}
+        <li class="dropdown"><a href="#"><span>Register</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                    <li><a href="{% url 'index' %}">Log-in</a></li>
+                    <li><a href="{% url 'index' %}?showSignup=true">Sign-up</a></li>
+                </ul>
+            {% endif %}
+        </li>
+        </ul>
+        
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>  
+
+  </header>
+
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+      <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-item active">
+          <img src="{% static 'assets/img/slide-01.jpg' %}" alt="">
+          
+          <div class="carousel-container">
+            <div>
+              <!--<p>Doral, Florida</p>-->
+              <h2><span>Fast</span> Charge you EV</h2>
+              <a href="{% url 'ev_charging' %}" class="btn-get-started">Find Nearby EV Stations</a>
+            </div>
+          </div>
+        </div><!-- End Carousel Item -->
+
+        <div class="carousel-item">
+          <img src="{% static 'assets/img/slide-02.jpg' %}" alt="">
+          <div class="carousel-container">
+            <div>
+              <!--<p>Doral, Florida</p>-->
+              <h2><span>24x7</span> Charge station availability</h2>
+              <a href="{% url 'ev_charging2' %}" class="btn-get-started">Find EV Stations</a>
+            </div>
+          </div>
+        </div><!-- End Carousel Item -->
+
+        <div class="carousel-item">
+          <img src="{% static 'assets/img/slide-03.jpg' %}" alt="">
+          <div class="carousel-container">
+            <div>
+              <!--<p>Doral, Florida</p>-->
+              <h2><span>Get directions</span> to nearest EV station</h2>
+              <a href="{% url 'battery_swap' %}" class="btn-get-started">Find Battery Swap Stations</a>
+            </div>
+          </div>
+        </div><!-- End Carousel Item -->
+
+        <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+        <ol class="carousel-indicators"></ol>
+
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Our Services</h2>
+        <p>We are here to help you in your low charge anywhere in the world</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item  position-relative">
+              <div class="icon">
+                <i class="bi bi-lightning-charge-fill"></i>
+              </div>
+              <a href="{% url 'servicedetails' %}" class="stretched-link">
+                <h3>Fast Charging</h3>
+              </a>
+              <p>You can find the fast charging EV station nearby your location or at anywhere in the world.</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-battery-half"></i>
+              </div>
+              <a href="{% url 'servicedetails2' %}" class="stretched-link">
+                <h3>Battery Exchange</h3>
+              </a>
+              <p>If your vehicle is compatible with battery swapping you can find the relevant EV station here.</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-bookmark-plus"></i>
+              </div>
+              <a href="{% url 'servicedetails3' %}" class="stretched-link">
+                <h3>Slot Booking</h3>
+              </a>
+              <p>You can book your slot at any EV station in one click from anywhere.</p>
+            </div>
+          </div><!-- End Service Item -->
+
+
+          <div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="500">
+            <div class="service-item position-relative">
+              <div class="icon">
+                <i class="bi bi-credit-card-fill"></i>
+              </div>
+              <a href="{% url 'servicedetails4' %}" class="stretched-link">
+                <h3>Payment Options</h3>
+              </a>
+              <p>Feel free to pay here by many options like upi, netbanking, card payment while slot booking else pay by cash at EV station.</p>
+            </div>
+          </div><!-- End Service Item -->
+
+
+        </div>
+
+      </div>
+
+    </section><!-- /Services Section -->
+
+    <!-- Agents Section -->
+    <section id="agents" class="agents section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Our Agents</h2>
+        <p>Meet our experienced and trusted professionals.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-5">
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="member">
+              <div class="pic"><img src="{% static 'assets/img/team/team-1.jpg' %}" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Pranat Pagar</h4>
+                <span>CEO/EV Station</span>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="member">
+              <div class="pic"><img src="{% static 'assets/img/team/team-1.jpg' %}" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Pranat Pagar</h4>
+                <span>Senior Developer/EV Station</span>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="member">
+              <div class="pic"><img src="{% static 'assets/img/team/team-1.jpg' %}" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>Pranat Pagar</h4>
+                <span>Developer/EV Station<br></span>
+                <div class="social">
+                  <a href=""><i class="bi bi-twitter-x"></i></a>
+                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-instagram"></i></a>
+                  <a href=""><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Team Member -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Agents Section -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Testimonials</h2>
+        <p>"Powering Journeys, One Charge at a Time and Driving the Future with Confidence"</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              },
+              "breakpoints": {
+                "320": {
+                  "slidesPerView": 1,
+                  "spaceBetween": 40
+                },
+                "1200": {
+                  "slidesPerView": 3,
+                  "spaceBetween": 1
+                }
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "Designing this platform was all about making EV charging simple, intuitive, and accessible. We focused on a seamless experience, ensuring you can find charging stations effortlessly. The future is electric, and we’re here to make your journey smoother!"
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{% static 'assets/img/testimonials/testimonials-01.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Pranat Pagar</h3>
+                  <h4>Designer</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "At EV Station, we are committed to building a cleaner, greener future by making EV charging accessible, reliable, and efficient. Our goal is to power your journey with convenience and sustainability. Thank you for being part of the electric revolution!"
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{% static 'assets/img/testimonials/testimonials-01.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Pranat Pagar</h3>
+                  <h4>Ceo &amp; Founder</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "At EV Station, we’re not just promoting EV charging—we’re driving a movement towards a greener future. Our mission is to connect EV drivers with reliable charging stations, making sustainability effortless. Join us in powering the future!"
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{% static 'assets/img/testimonials/testimonials-01.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Pranat Pagar</h3>
+                  <h4>Marketing Manager</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  "Ensuring our provided EV stations run smoothly and efficiently is our top priority. We’re committed to providing a seamless charging experience, so you can power up and get back on the road with confidence. Your journey matters to us!"
+                </p>
+                <div class="profile mt-auto">
+                  <img src="{% static 'assets/img/testimonials/testimonials-01.jpg' %}" class="testimonial-img" alt="">
+                  <h3>Pranat Pagar</h3>
+                  <h4>Site Manager</h4>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+
+    </section><!-- /Testimonials Section -->
+
+  </main>
+
+  <footer id="footer" class="footer light-background">
+
+    <div class="container">
+      <div class="row gy-3">
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="bi bi-geo-alt icon"></i>
+          <div class="address">
+            <h4>Address</h4>
+            <p>D.Y Patil College of Engineering and Innovation</p>
+            <p>Talegaon, Pune, Maharashtra</p>
+            <p></p>
+          </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="bi bi-telephone icon"></i>
+          <div>
+            <h4>Contact</h4>
+            <p>
+              <strong>Phone:</strong> <span>+91 8669341360</span><br>
+              <strong>Email:</strong> <span>ppagar602@gmail.com</span><br>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 d-flex">
+          <i class="bi bi-clock icon"></i>
+          <div>
+            <h4>Opening Hours</h4>
+            <p>
+              <strong>Mon-Sat:</strong> <span>11AM - 11PM</span><br>
+              <strong>Sunday</strong>: <span>Closed</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h4>Follow Us On</h4>
+          <div class="social-links d-flex">
+            <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">EV Station</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+       
+        Designed by <a href="#">Pranat Pagar DYPCOEI</a>
+      </div>
+    </div>
+
+  </footer>
+ 
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <!-- Popup -->
+  <div id="feature-overlay" onclick="closeFeaturePopup()">
+    <div id="feature-popup" onclick="event.stopPropagation()">
+      <h2>Feature Under Development</h2>
+      <p>This feature is currently being developed.</p>
+    </div>
+  </div>
+
+  <script>
+    function showFeaturePopup(event) {
+      event.preventDefault();
+      const overlay = document.getElementById("feature-overlay");
+      overlay.classList.add("show");
+    }
+    
+    function closeFeaturePopup() {
+      const overlay = document.getElementById("feature-overlay");
+      overlay.classList.remove("show");
+    }
+    </script>
+
+</body>
+
+</html>
