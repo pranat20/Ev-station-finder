@@ -22,7 +22,7 @@ SECRET_KEY = 'django-insecure-a)t@dl^l^%u#9h-%@pbma3(wlk$bjg3-l5*g391jf-gg_pgg%t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*]
 
 STATIC_URL = '/static/'
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',  # needed for login session
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',  # protects against CSRF attacks
@@ -140,6 +141,10 @@ LOGIN_URL = '/login/'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+import django_heroku
+django_heroku.settings(locals())
+
 
 
 
