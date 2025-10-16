@@ -503,190 +503,249 @@
  <!-- Login Popup -->
 <div class="overlay" id="loginPopup">
   <div class="popup">
-      <span class="close-btn" onclick="closePopup('loginPopup')">&times;</span>
-      <h2>Login</h2>
+    <span class="close-btn" onclick="closePopup('loginPopup')">&times;</span>
+    <h2>Login</h2>
+
+    {% if messages %}
       <div class="message-container">
-          {% if messages %}
-              <ul class="messages">
-                  {% for message in messages %}
-                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                  {% endfor %}
-              </ul>
-          {% endif %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
       </div>
-      <form method="POST" action="{% url 'login' %}">
-          {% csrf_token %}
-          <input type="text" name="username" placeholder="Username" required>
-          <div class="password-container">
-          <input type="password" id="login_password" name="password" placeholder="Password" required>
-<i id="toggle-login-password" class="fa fa-eye" onclick="togglePasswordVisibility('login_password', 'toggle-login-password')"></i>
-          </div>
-          <button type="submit" class="btn">Login</button>
-      </form>
-      <p><a href="#" onclick="showResetForm()">Forgot Password?</a></p>
-      <p>Don't have an account? <a href="#" onclick="showSignupForm()">Sign Up</a></p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Username" required>
+      <div class="password-container">
+        <input type="password" id="login_password" name="password" placeholder="Password" required>
+        <i id="toggle-login-password" class="fa fa-eye" onclick="togglePasswordVisibility('login_password', 'toggle-login-password')"></i>
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <p><a href="#" onclick="showResetForm()">Forgot Password?</a></p>
+    <p>Don't have an account? <a href="#" onclick="showSignupForm()">Sign Up</a></p>
   </div>
 </div>
 
 <!-- Signup Popup -->
 <div class="overlay" id="signupPopup" style="display: none;">
   <div class="popup">
-      <span class="close-btn" onclick="closePopup('signupPopup')">&times;</span>
-      <h2>Sign Up</h2>
+    <span class="close-btn" onclick="closePopup('signupPopup')">&times;</span>
+    <h2>Sign Up</h2>
+
+    {% if messages %}
       <div class="message-container">
-          {% if messages %}
-              <ul class="messages">
-                  {% for message in messages %}
-                      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                  {% endfor %}
-              </ul>
-          {% endif %}
+        <ul class="messages">
+          {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
       </div>
-      <form method="POST" action="{% url 'signup' %}">
-          {% csrf_token %}
-          <input type="text" name="full_name" placeholder="Full Name" required>
-          <input type="text" name="username" id="username" placeholder="Username" required>
-          <span id="username_msg" class="live-msg"></span>
-          <input type="email" name="email" id="email" placeholder="Email" required>
-          <span id="email_msg" class="live-msg"></span>
-          <div class="password-container">
-            <input type="password" name="password" id="password" placeholder="Password" required>
-            <span class="live-msg"></span>
-            <i id="toggle-password" class="fa fa-eye" onclick="togglePasswordVisibility('password', 'toggle-password')"></i>
-          </div>
-          
-          <div class="password-container">
-            <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
-            <span class="live-msg"></span>
-            <i id="toggle-confirm-password" class="fa fa-eye" onclick="togglePasswordVisibility('confirm_password', 'toggle-confirm-password')"></i>
-          </div>
-          <span id="password_msg" class="live-msg"></span>
-          <button type="submit" class="btn">Signup</button>
-      </form>
-      <p>Already have an account? <a href="#" onclick="showLoginForm()">Login</a></p>
+    {% endif %}
+
+    <form method="POST" action="{% url 'signup' %}">
+      {% csrf_token %}
+      <input type="text" name="full_name" placeholder="Full Name" required>
+      <input type="text" name="username" id="username" placeholder="Username" required>
+      <span id="username_msg" class="live-msg"></span>
+
+      <input type="email" name="email" id="email" placeholder="Email" required>
+      <span id="email_msg" class="live-msg"></span>
+
+      <div class="password-container">
+        <input type="password" name="password" id="password" placeholder="Password" required>
+        <i id="toggle-password" class="fa fa-eye" onclick="togglePasswordVisibility('password', 'toggle-password')"></i>
+      </div>
+
+      <div class="password-container">
+        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required>
+        <i id="toggle-confirm-password" class="fa fa-eye" onclick="togglePasswordVisibility('confirm_password', 'toggle-confirm-password')"></i>
+      </div>
+      <span id="password_msg" class="live-msg"></span>
+
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+
+    <p>Already have an account? <a href="#" onclick="showLoginForm()">Login</a></p>
   </div>
 </div>
 
 <!-- Password Reset Form -->
 <div class="overlay" id="resetPopup" style="display: none;">
   <div class="popup">
-      <span class="close-btn" onclick="closePopup('resetPopup')">&times;</span>
-      <h2>Reset Password</h2>
-      <input type="email" placeholder="Enter your email">
-      <button class="btn">Send Reset Link</button>
-      <p><a href="#" onclick="showLoginForm()">Back to Login</a></p>
+    <span class="close-btn" onclick="closePopup('resetPopup')">&times;</span>
+    <h2>Reset Password</h2>
+    <input type="email" placeholder="Enter your email" required>
+    <button class="btn">Send Reset Link</button>
+    <p><a href="#" onclick="showLoginForm()">Back to Login</a></p>
   </div>
 </div>
 
-<script>
-  // Close the popup
-  function closePopup(id) {
-      document.getElementById(id).style.display = "none";
-  }
-
-  // Show the Signup form
-  function showSignupForm() {
-      document.getElementById("loginPopup").style.display = "none";
-      document.getElementById("signupPopup").style.display = "flex";
-  }
-
-  // Show the Login form
-  function showLoginForm() {
-      document.getElementById("signupPopup").style.display = "none";
-      document.getElementById("resetPopup").style.display = "none";
-      document.getElementById("loginPopup").style.display = "flex";
-  }
-
-  // Show the Reset form
-  function showResetForm() {
-      document.getElementById("loginPopup").style.display = "none";
-      document.getElementById("signupPopup").style.display = "none";
-      document.getElementById("resetPopup").style.display = "flex";
-  }
-
-  function togglePasswordVisibility(fieldId, iconId) {
-    let passwordField = document.getElementById(fieldId);
-    let toggleIcon = document.getElementById(iconId);
-
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        toggleIcon.classList.remove("fa-eye");
-        toggleIcon.classList.add("fa-eye-slash");
-    } else {
-        passwordField.type = "password";
-        toggleIcon.classList.remove("fa-eye-slash");
-        toggleIcon.classList.add("fa-eye");
-    }
-}
-
-  window.onload = function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    if (urlParams.get('showSignup') === "true") {
-        showSignupForm();  // Display the signup popup
-    } else {
-        document.getElementById('loginPopup').style.display = 'flex';  // Show login popup by default
-    }
-};
-
-    
-  
-  
-</script>
-
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-  $(document).ready(function () {
+  // 🔹 Popup Controls
+  function closePopup(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  function showSignupForm() {
+    hideAllPopups();
+    document.getElementById("signupPopup").style.display = "flex";
+  }
+
+  function showLoginForm() {
+    hideAllPopups();
+    document.getElementById("loginPopup").style.display = "flex";
+  }
+
+  function showResetForm() {
+    hideAllPopups();
+    document.getElementById("resetPopup").style.display = "flex";
+  }
+
+  function hideAllPopups() {
+    document.querySelectorAll(".overlay").forEach(p => p.style.display = "none");
+  }
+
+  // 🔹 Password Toggle
+  function togglePasswordVisibility(fieldId, iconId) {
+    let field = document.getElementById(fieldId);
+    let icon = document.getElementById(iconId);
+    if (field.type === "password") {
+      field.type = "text";
+      icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+      field.type = "password";
+      icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+  }
+
+  // 🔹 Default Popup Load
+  window.onload = function() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('showSignup') === "true") {
+      showSignupForm();
+    } else {
+      document.getElementById('loginPopup').style.display = 'flex';
+    }
+  };
+
+  // 🔹 Live Username & Email Validation
+  $(function () {
     $('#username, #email').on('input', function () {
-        const field = $(this).attr('id');
-        $('#' + field + '_msg').text('').css('color', '');
+      const field = $(this).attr('id');
+      $('#' + field + '_msg').text('').css('color', '');
     });
 
     $('#username, #email').on('blur', function () {
-        const field = $(this).attr('id');
-        const value = $(this).val();
-        const messageSpan = $('#' + field + '_msg');
+      const field = $(this).attr('id');
+      const value = $(this).val().trim();
+      const messageSpan = $('#' + field + '_msg');
 
-        if (value.trim() === '') {
-            messageSpan.text('').css('color', '');
-            return;
+      if (!value) return;
+
+      $.get('/validate/', { field, value }, function (data) {
+        if (data.message) {
+          messageSpan.text(data.message).css('color', 'red');
+        } else {
+          messageSpan.text('').css('color', '');
         }
-
-        $.get('/validate/', { field: field, value: value }, function (data) {
-            if (data.message) {
-                messageSpan.text(data.message).css('color', 'red');
-            } else {
-                messageSpan.text('').css('color', ''); // Clear message when input is valid
-            }
-        });
+      });
     });
-});
 
-</script>
+    // 🔹 Password Match Check
+    $('#password, #confirm_password').on('input', function () {
+      const pass = $('#password').val();
+      const confirm = $('#confirm_password').val();
+      const msg = $('#password_msg');
 
-<script>
-  $(document).ready(function () {
-      function checkPasswordMatch() {
-          const password = $('#password').val();
-          const confirmPassword = $('#confirm_password').val();
-          const messageSpan = $('#password_msg');
-
-          if (password === '' || confirmPassword === '') {
-              messageSpan.text('');
-              return;
-          }
-
-          if (password !== confirmPassword) {
-              messageSpan.text("Passwords do not match").css("color", "red");
-          } else {
-              messageSpan.text("Passwords match").css("color", "green");
-          }
+      if (!pass || !confirm) {
+        msg.text('');
+      } else if (pass !== confirm) {
+        msg.text("Passwords do not match").css("color", "red");
+      } else {
+        msg.text("Passwords match").css("color", "green");
       }
-
-      $('#password, #confirm_password').on('input', checkPasswordMatch);
+    });
   });
 </script>
 
+<style>
+  /* 🔸 Basic Popup Styling */
+  .overlay {
+    display: none;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+  }
+  .popup {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  .popup h2 { text-align: center; margin-bottom: 15px; }
+  .popup input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  .btn {
+    background: #0a911aff;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .btn:hover { background: #0bae1eff; }
+  .close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 22px; cursor: pointer;
+  }
+  .password-container {
+    position: relative;
+  }
+  .password-container i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: gray;
+  }
+  .live-msg { font-size: 13px; display: block; margin-top: -5px; margin-bottom: 5px; }
+  .messages { list-style: none; padding: 0; text-align: center; }
+  .messages li { color: red; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* 🔸 Mobile Friendly */
+  @media (max-width: 500px) {
+    .popup { width: 90%; padding: 20px; }
+  }
+</style>
 
 
 
